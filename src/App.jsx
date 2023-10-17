@@ -10,6 +10,7 @@ import {
 import { FaBook, FaGithub, FaNpm, FaTwitter } from "react-icons/fa";
 
 export default function App() {
+  
   return (
     <section>
       <header className="header">
@@ -113,9 +114,9 @@ export default function App() {
               Coming soon to the mobile stores
             </h1>
             <p className="max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl text-black">
-            Get ready for Infiniti Vault on Mobile, Coming soon to the appstore and playstore. Anticipate!
+              Get ready for Infiniti Vault on Mobile, Coming soon to the
+              appstore and playstore. Anticipate!
             </p>
-           
           </div>
           {/* <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
             <img
@@ -127,7 +128,12 @@ export default function App() {
       </section>
       <footer className="flex items-center justify-between max-w-[1250px] mx-auto p-10 max-md:py-5 max-md:px-7">
         <div>
-          <a href="https://github.com/Infiniti-Vault" target="_blank"><FaGithub size={20} className="opacity-70 hover:opacity-100 cursor-pointer"/></a>
+          <a href="https://github.com/Infiniti-Vault" target="_blank">
+            <FaGithub
+              size={20}
+              className="opacity-70 hover:opacity-100 cursor-pointer"
+            />
+          </a>
         </div>
         <p className="opacity-50 text-sm">© 2023 Infiniti Vault.</p>
       </footer>
