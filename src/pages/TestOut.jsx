@@ -139,7 +139,6 @@ const TestOut = () => {
                   ref={fileRef}
                   type="file"
                   onChange={(e) => setFile(e.target.files[0])}
-                  accept="image/*"
                   className="hidden"
                 />
               </>
