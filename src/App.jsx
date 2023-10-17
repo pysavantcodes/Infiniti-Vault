@@ -48,8 +48,8 @@ export default function App() {
         </div>
       </header>
       <section className="max-w-[1250px] mx-auto py-10 px-7 max-md:px-8">
-        <div className="flex items-center gap-x-4 max-md:justify-center">
-          <div className="w-[70px] h-[1px] bg-white/[50%] max-md:hidden"></div>
+        <div className="flex items-center gap-x-4">
+          <div className="w-[70px] h-[1px] bg-white/[50%] max-md:w-[50px]"></div>
           <h1 className="text-3xl font-black max-md:text-2xl text-white/[80%]">
             Built for scale
           </h1>

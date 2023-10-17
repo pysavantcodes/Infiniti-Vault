@@ -101,8 +101,8 @@ const TestOut = () => {
           >
             {file ? (
               <div className="text-center flex flex-col items-center gap-y-2">
-                <p>1 file ready for upload</p>
-                <div className="flex items-center gap-x-3">
+                <p className="max-md:mb-2">1 file ready for upload</p>
+                <div className="flex items-center gap-x-3 max-md:flex-col gap-y-3">
                 <Button
                   isLoading={loading}
                   onClick={() => uploadFile()}
