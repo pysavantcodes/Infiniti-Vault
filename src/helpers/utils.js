@@ -24,6 +24,8 @@ export function getFileExtensionFromMimeType(mimeType) {
         return '.json';
       case 'application/xml':
         return '.xml';
+      case 'application/yaml':
+        return '.yaml';
       case 'application/msword':
         return '.doc';
       case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':

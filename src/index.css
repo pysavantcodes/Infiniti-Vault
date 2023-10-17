@@ -12,51 +12,39 @@
   user-select: none;
 }
 
-.main {
-  width: 100vw;
-  min-height: 100vh;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  padding: 120px 24px 160px 24px;
-  pointer-events: none;
+html {
+  background: #000 !important;
 }
 
-.main:before {
-  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);
-  position: absolute;
-  content: "";
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  top: 0;
+body {
+  background-color: black;
+  color: white;
 }
 
-.main:after {
-  content: "";
-  background-image: url("./assets/grid.svg");
-  z-index: 1;
-  position: absolute;
+.header {
+  background-image: url("../src/assets/bg.svg");
   width: 100%;
-  height: 100%;
-  top: 0;
-  opacity: 0.7;
-  filter: invert(1);
+  background-size: cover;
+  background-position: center;
 }
 
-.gradient {
-  height: fit-content;
-  z-index: 3;
-  width: 100%;
-  max-width: 640px;
-  background-image: url("https://maxst.icons8.com/vue-static/landings/page-index/main-gradient.png");
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  filter: blur(100px) saturate(150%);
-  top: 80px;
-  opacity: 0.5;
+.animate-gradient {
+  background-size: 300%;
+  -webkit-animation: animatedgradient 6s ease infinite alternate;
+  -moz-animation: animatedgradient 6s ease infinite alternate;
+  animation: animatedgradient 6s ease infinite alternate;
+}
+
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @media screen and (max-width: 640px) {
