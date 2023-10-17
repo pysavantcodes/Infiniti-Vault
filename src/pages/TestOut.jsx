@@ -8,10 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { IoCloudUploadOutline } from "react-icons/io5";
+import { IoClose, IoCloudUploadOutline } from "react-icons/io5";
 import { uploadSingleFile } from "../services/UploadToIPFS";
 import { formatFileSize, stringTruncate } from "../helpers/utils";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { FaUpload } from "react-icons/fa";
 
 const TestOut = () => {
   const [uploadMode, setUploadMode] = useState("file");
@@ -101,13 +102,24 @@ const TestOut = () => {
             {file ? (
               <div className="text-center flex flex-col items-center gap-y-2">
                 <p>1 file ready for upload</p>
+                <div className="flex items-center gap-x-3">
                 <Button
                   isLoading={loading}
                   onClick={() => uploadFile()}
                   className="bg-[#b9ff66]/10 text-[#b9ff66]"
                 >
+                  <IoCloudUploadOutline size={19}/>
                   Upload File
                 </Button>
+                <Button
+                  isDisabled={loading}
+                  onClick={() => setFile(null)}
+                  className="bg-[#DC3545]/10 text-[#DC3545]"
+                >
+                  <IoClose size={19}/>
+                  Cancel Upload
+                </Button>
+                </div>
               </div>
             ) : (
               <>

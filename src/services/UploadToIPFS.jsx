@@ -2,7 +2,7 @@ import { NFTStorage } from "nft.storage";
 
 const nftStorage = new NFTStorage({
   token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQ0MEVBMkFlNDREQjRmZkUzMTY2MDQxMjAxQ2Y1RkM4ODQ3MDkxRDMiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2Njc4NDI3NjA1NCwibmFtZSI6InRlc3QifQ.OcHzQJRzwe1Ctzf2G-K9kgEaZ8TPME3su_lNs31t3Gg",
+    `${import.meta.env.VITE_APP_UPLOAD_KEY}`,
 });
 
 export const uploadSingleFile = async (file) => {
