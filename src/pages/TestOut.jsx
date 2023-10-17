@@ -10,7 +10,7 @@ import {
 } from "@nextui-org/react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { uploadSingleFile } from "../services/UploadToIPFS";
-import { formatFileSize } from "../helpers/utils";
+import { formatFileSize, stringTruncate } from "../helpers/utils";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const TestOut = () => {
@@ -141,7 +141,10 @@ const TestOut = () => {
             openOnClick={true}
           />
           {link && (
-            <Table className="!bg-black" aria-label="Example static collection table">
+            <Table
+              className="!bg-black"
+              aria-label="Example static collection table"
+            >
               <TableHeader>
                 <TableColumn>Name</TableColumn>
                 <TableColumn>Size</TableColumn>
@@ -149,7 +152,9 @@ const TestOut = () => {
               </TableHeader>
               <TableBody>
                 <TableRow key="1">
-                  <TableCell className="">{tempFile.name}</TableCell>
+                  <TableCell>
+                    <p className="line-clamp-1">{stringTruncate(tempFile.name,10)}</p>
+                  </TableCell>
                   <TableCell>{formatFileSize(tempFile.size, 1)}</TableCell>
                   <TableCell>
                     <Button
