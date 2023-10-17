@@ -48,7 +48,7 @@ const NavBar = () => {
               <IoIosInfinite color="#b9ff66" size={30} />
               Vault
             </p>
-            <IoIosInfinite className="hidden max-md:block" size={40} />
+            <IoIosInfinite color="#b9ff66" className="hidden max-md:block" size={40} />
           </NavLink>
         </NavbarBrand>
       </NavbarContent>
