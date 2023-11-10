@@ -1,13 +1,11 @@
 import React from "react";
-import { Button, Link } from "@nextui-org/react";
 import {
   IoFlash,
   IoGlobeOutline,
   IoInfinite,
-  IoLogoApple,
   IoLogoReact,
 } from "react-icons/io5";
-import { FaBook, FaGithub, FaNpm, FaTwitter } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 
 export default function App() {
   
@@ -135,7 +133,7 @@ export default function App() {
             />
           </a>
         </div>
-        <p className="text-sm text-white/50">With ❤ from <a href="https://pysavant.netlify.app" className="hover:text-white/100">Pysavant</a></p>
+        <p className="text-sm text-white/50">With ❤ from <a href="https://pysavant.netlify.app" className="text-white/100 hover:text-white/90">Pysavant</a></p>
       </footer>
     </section>
   );

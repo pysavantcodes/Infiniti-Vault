@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
+  Progress,
   Table,
   TableBody,
   TableCell,
@@ -9,41 +10,40 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { IoClose, IoCloudUploadOutline } from "react-icons/io5";
-import { uploadSingleFile } from "../services/UploadToIPFS";
 import { formatFileSize, stringTruncate } from "../helpers/utils";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { FaUpload } from "react-icons/fa";
+import NFTStorageUploader from "../services/FileUpload";
+import toast from "react-hot-toast";
 
 const TestOut = () => {
+  const {
+    handleFileChange,
+    handleUpload,
+    file,
+    uploading,
+    uploadProgress,
+    uploadResult,
+    cancelUpload,
+    setFile,
+  } = NFTStorageUploader();
   const [uploadMode, setUploadMode] = useState("file");
   const [dragOver, setDragOver] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState(null);
-  const [tempFile, setTempFile] = useState(null);
-  const [link, setLink] = useState(null);
   const fileRef = useRef();
 
-  const uploadFile = async () => {
-    if (file) {
-      setTempFile(file);
-      setLoading(true);
-      await uploadSingleFile(file)
-        .then((data) => {
-          setLink(data);
-          setTempFile(file);
-          setFile(null);
-        })
-        .catch((e) => {});
-      setLoading(false);
-    }
+  const uploadFile = () => {
+    setLoading(true);
+    handleUpload()
+      .then(() => {
+        setFile(null);
+        setLoading(false);
+        toast.success('File Uploaded Successfully!');
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error.message);
+      });
   };
-
-  useEffect(() => {
-    if (file) {
-      setTempFile(null);
-      setLink(null);
-    }
-  }, [file]);
 
   return (
     <section className="max-w-[1300px] mx-auto px-10 py-5 max-md:px-8">
@@ -84,7 +84,7 @@ const TestOut = () => {
                 e.dataTransfer.files.length > 0 &&
                 e.dataTransfer.files[0].type !== ""
               ) {
-                setFile(e.dataTransfer.files[0]);
+                handleFileChange(e);
               }
             }}
             onDragLeave={(e) => {
@@ -97,33 +97,58 @@ const TestOut = () => {
             }}
             className={`p-10 border-[2px] h-[200px] ${
               dragOver ? "bg-white/10" : ""
-            } border-white/[15%] rounded-lg border-dashed w-full items-center flex justify-center mb-5`}
+            } border-white/[15%] rounded-lg border-dashed w-full flex items-center mb-5`}
           >
             {file ? (
-              <div className="text-center flex flex-col items-center gap-y-2">
-                <p className="max-md:mb-2">1 file ready for upload</p>
+              <div className="text-center w-full flex flex-col items-center gap-y-2">
+                {file && !loading && (
+                  <p className="max-md:mb-2">1 file ready for upload</p>
+                )}
+                {loading && (
+                  <Progress
+                    aria-label="Loading..."
+                    value={uploadProgress}
+                    isIndeterminate={uploadProgress == 100 ? true : false}
+                    classNames={{
+                      base: "w-full my-2",
+                      track: "drop-shadow-md border-none",
+                      indicator: "bg-gradient-to-r from-[#b9ff66] to-[#b9ff66]",
+                      label: "text-default-600",
+                      value: "text-foreground/60",
+                    }}
+                    label={
+                      uploadProgress == 100 ? "Finalizing Upload" : "Uploading"
+                    }
+                    size="sm"
+                    color="#b9ff66"
+                    showValueLabel={true}
+                  />
+                )}
                 <div className="flex items-center gap-x-3 max-md:flex-col gap-y-3">
-                <Button
-                  isLoading={loading}
-                  onClick={() => uploadFile()}
-                  className="bg-[#b9ff66]/10 text-[#b9ff66]"
-                >
-                  <IoCloudUploadOutline size={19}/>
-                  Upload File
-                </Button>
-                <Button
-                  isDisabled={loading}
-                  onClick={() => setFile(null)}
-                  className="bg-[#DC3545]/10 text-[#DC3545]"
-                >
-                  <IoClose size={19}/>
-                  Cancel Upload
-                </Button>
+                  {file && !loading && (
+                    <Button
+                      isLoading={loading}
+                      onClick={() => uploadFile()}
+                      className="bg-[#b9ff66]/10 text-[#b9ff66]"
+                    >
+                      <IoCloudUploadOutline size={19} />
+                      Upload File
+                    </Button>
+                  )}
+                  <Button
+                    onClick={() => {
+                      file && !loading ? setFile(null) : cancelUpload();
+                    }}
+                    className="bg-[#DC3545]/10 text-[#DC3545]"
+                  >
+                    <IoClose size={19} />
+                    {file && !loading ? "Remove File" : "Cancel Upload"}
+                  </Button>
                 </div>
               </div>
             ) : (
               <>
-                <p className="flex items-center gap-x-2 max-md:flex-col gap-y-2">
+                <p className="flex text-center justify-center items-center gap-x-2 max-md:flex-col gap-y-2 w-full">
                   <span className="flex items-center gap-x-2">
                     <IoCloudUploadOutline size={24} className="mr-1" />
                     Drag and drop or
@@ -138,7 +163,7 @@ const TestOut = () => {
                 <input
                   ref={fileRef}
                   type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
+                  onChange={(e) => handleFileChange(e)}
                   className="hidden"
                 />
               </>
@@ -151,7 +176,7 @@ const TestOut = () => {
             className="bg-black z-30 text-sm"
             openOnClick={true}
           />
-          {link && (
+          {uploadResult && (
             <Table
               className="!bg-black"
               aria-label="Example static collection table"
@@ -164,14 +189,22 @@ const TestOut = () => {
               <TableBody>
                 <TableRow key="1">
                   <TableCell>
-                    <p className="line-clamp-1">{stringTruncate(tempFile.name,10)}</p>
+                    <p className="line-clamp-1">
+                      {stringTruncate(uploadResult.value.files[0].name, 10)}
+                    </p>
                   </TableCell>
-                  <TableCell>{formatFileSize(tempFile.size, 1)}</TableCell>
+                  <TableCell>
+                    {formatFileSize(uploadResult.value.size, 1)}
+                  </TableCell>
                   <TableCell>
                     <Button
                       data-tooltip-id="app-title"
                       className="text-sm bg-transparent p-0"
-                      onClick={() => navigator.clipboard.writeText(link)}
+                      onClick={() =>
+                        navigator.clipboard.writeText(
+                          `https://${uploadResult.value.cid}.ipfs.w3s.link/${uploadResult.value.files[0].name}`
+                        )
+                      }
                     >
                       Copy Link
                     </Button>

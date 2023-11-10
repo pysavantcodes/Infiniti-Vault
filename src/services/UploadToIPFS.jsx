@@ -1,21 +1,21 @@
-import { NFTStorage } from "nft.storage";
+// import { NFTStorage } from "nft.storage";
 
-const nftStorage = new NFTStorage({
-  token:
-    `${import.meta.env.VITE_APP_UPLOAD_KEY}`,
-});
+// const nftStorage = new NFTStorage({
+//   token:
+//     `${import.meta.env.VITE_APP_UPLOAD_KEY}`,
+// });
 
-export const uploadSingleFile = async (file) => {
-  if (file) {
-    try {
-      const content = new Blob([file]);
-      const cid = await nftStorage.storeBlob(content);
-      return `https://${cid}.ipfs.w3s.link`;
-    } catch (error) {
-      throw new Error("An Error Occured while uploading");
-    }
-  }
-};
+// export const uploadSingleFile = async (file) => {
+//   if (file) {
+//     try {
+//       const content = new Blob([file]);
+//       const cid = await nftStorage.storeBlob(content);
+//       return `https://${cid}.ipfs.w3s.link`;
+//     } catch (error) {
+//       throw new Error("An Error Occured while uploading");
+//     }
+//   }
+// };
 
 // const uploadFile = async () => {
 //     const formData = new FormData();

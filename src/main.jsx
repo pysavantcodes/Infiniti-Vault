@@ -7,6 +7,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import TestOut from "./pages/TestOut.jsx";
 import NavBar from "./components/NavBar.jsx";
 import Lenis from "@studio-freight/lenis";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ requestAnimationFrame(raf);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <Toaster />
     <NextUIProvider>
       <main className="dark text-foreground bg-background">
         <RouterProvider router={router} />
