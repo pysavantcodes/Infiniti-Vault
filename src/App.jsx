@@ -135,7 +135,7 @@ export default function App() {
             />
           </a>
         </div>
-        <p className="opacity-50 text-sm">© 2023 Infiniti Vault.</p>
+        <p className="text-sm text-white/50">With ❤ from <a href="https://pysavant.netlify.app" className="hover:text-white/100">Pysavant</a></p>
       </footer>
     </section>
   );
